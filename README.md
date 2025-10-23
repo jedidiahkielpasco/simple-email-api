@@ -114,7 +114,24 @@ Content-Type: application/json
     "to": "recipient@example.com",
     "from": "sender@example.com",
     "subject": "Test Email Subject",
-    "body": "This is the email body content"
+    "body": "This is the email body content",
+    "willSucceed": true
 }
 ```
+
+**Note:** The `willSucceed` parameter is optional and used for debugging purposes. When set to `true`, it ensures the email processing will go through the success route.
+
+## Security and Data Storage
+
+### Email Content Security
+For security reasons, the email body and subject content are **not stored** in the database. This ensures that sensitive email content is not persisted and reduces the risk of data exposure.
+
+### Email Log Table
+The `email_logs` table serves as an example/demonstration table that tracks sent emails. It contains:
+- Email metadata (recipient, sender)
+- Timestamps
+- **Note:** This table is for demonstration purposes only.
+
+### Debug Testing
+When testing the email functionality, the system includes debug options to ensure emails are processed successfully. The queue worker can be run with specific options to handle testing scenarios more effectively.
 
