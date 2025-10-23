@@ -7,7 +7,6 @@ This is a Laravel-based email API with OAuth2 authentication using Laravel Passp
 - PHP 8.1 or higher
 - Composer
 - PostgreSQL (default) or MySQL database
-- Node.js (for frontend assets, if needed)
 
 ## Step-by-Step Setup
 
