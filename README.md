@@ -131,7 +131,3 @@ The `email_logs` table serves as an example/demonstration table that tracks sent
 - Email metadata (recipient, sender)
 - Timestamps
 - **Note:** This table is for demonstration purposes only.
-
-### Debug Testing
-When testing the email functionality, the system includes debug options to ensure emails are processed successfully. The queue worker can be run with specific options to handle testing scenarios more effectively.
-
