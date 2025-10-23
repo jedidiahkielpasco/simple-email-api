@@ -121,7 +121,7 @@ Content-Type: application/json
 
 **Note:** The `willSucceed` parameter is optional and used for debugging purposes. When set to `true`, it ensures the email processing will go through the success route.
 
-## Security and Data Storage
+## Notes
 
 ### Email Content Security
 For security reasons, the email body and subject content are **not stored** in the database. This ensures that sensitive email content is not persisted and reduces the risk of data exposure.
@@ -130,4 +130,13 @@ For security reasons, the email body and subject content are **not stored** in t
 The `email_logs` table serves as an example/demonstration table that tracks sent emails. It contains:
 - Email metadata (recipient, sender)
 - Timestamps
-- **Note:** This table is for demonstration purposes only.
+- **Note:** This table is for debugging purposes only.
+
+### Running All Tests
+
+To run all tests:
+
+```bash
+php artisan test tests/Feature
+```
+
