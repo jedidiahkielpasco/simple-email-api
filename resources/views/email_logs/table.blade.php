@@ -31,9 +31,8 @@
                 <thead class="table-light">
                     <tr>
                         <th>ID</th>
-                        <th>To Email</th>
-                        <th>From Email</th>
-                        <th>From Name</th>
+                        <th>To</th>
+                        <th>From</th>
                         <th>Subject</th>
                         <th>Body Preview</th>
                         <th>Message ID</th>
@@ -45,16 +44,15 @@
                         <tr>
                             <td><code>{{ $log->id }}</code></td>
                             <td>
-                                <a href="mailto:{{ $log->to_email }}" class="text-decoration-none">
-                                    {{ $log->to_email }}
+                                <a href="mailto:{{ $log->to }}" class="text-decoration-none">
+                                    {{ $log->to }}
                                 </a>
                             </td>
                             <td>
-                                <a href="mailto:{{ $log->from_email }}" class="text-decoration-none">
-                                    {{ $log->from_email }}
+                                <a href="mailto:{{ $log->from }}" class="text-decoration-none">
+                                    {{ $log->from }}
                                 </a>
                             </td>
-                            <td>{{ $log->from_name ?? '-' }}</td>
                             <td class="subject-cell" title="{{ $log->subject }}">
                                 {{ $log->subject ?? '-' }}
                             </td>

@@ -31,19 +31,8 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/oauth/personal-access-tokens/{token_id}', [PersonalAccessTokenController::class, 'destroy']);
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::middleware('auth:api')->get('/hello', function() {
-    return response()->json([
-        'message' => 'Hello World',
-        'status' => 'success'
-    ]);
-});
-
 Route::middleware('auth:api')->group(function () {
-    Route::post('/emails', [EmailController::class, 'store']);
-    Route::get('/emails-stats', [EmailController::class, 'stats']);
+    Route::post('v1/emails', [EmailController::class, 'store']);
+    Route::get('v1/emails-stats', [EmailController::class, 'stats']);
 });
 

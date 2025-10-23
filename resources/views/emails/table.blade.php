@@ -24,15 +24,13 @@
                 <thead class="table-light">
                     <tr>
                         <th>ID</th>
-                        <th>To Email</th>
-                        <th>From Email</th>
-                        <th>From Name</th>
+                        <th>To</th>
+                        <th>From</th>
                         <th>Status</th>
                         <th>Created</th>
                         <th>Sent At</th>
                         <th>Failed At</th>
                         <th>Message ID</th>
-                        <th>Will Succeed</th>
                         <th>Error Message</th>
                     </tr>
                 </thead>
@@ -41,16 +39,15 @@
                         <tr>
                             <td><code>{{ $email->id }}</code></td>
                             <td>
-                                <a href="mailto:{{ $email->to_email }}" class="text-decoration-none">
-                                    {{ $email->to_email }}
+                                <a href="mailto:{{ $email->to }}" class="text-decoration-none">
+                                    {{ $email->to }}
                                 </a>
                             </td>
                             <td>
-                                <a href="mailto:{{ $email->from_email }}" class="text-decoration-none">
-                                    {{ $email->from_email }}
+                                <a href="mailto:{{ $email->from }}" class="text-decoration-none">
+                                    {{ $email->from }}
                                 </a>
                             </td>
-                            <td>{{ $email->from_name ?? '-' }}</td>
                             <td>
                                 <span class="badge status-badge status-{{ $email->status }}">
                                     {{ ucfirst($email->status) }}
@@ -88,13 +85,6 @@
                                 @endif
                             </td>
                             <td>
-                                @if($email->willSucceed)
-                                    <span class="badge bg-success">Yes</span>
-                                @else
-                                    <span class="badge bg-danger">No</span>
-                                @endif
-                            </td>
-                            <td>
                                 @if($email->error_message)
                                     <span class="text-danger small" title="{{ $email->error_message }}">
                                         {{ Str::limit($email->error_message, 30) }}
@@ -106,7 +96,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="11" class="text-center py-4">
+                            <td colspan="10" class="text-center py-4">
                                 <p class="text-muted">No emails found</p>
                             </td>
                         </tr>

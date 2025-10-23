@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('email_tracker', function (Blueprint $table) {
             $table->id();
-            $table->string('to_email');
-            $table->string('from_email');
-            $table->string('from_name')->nullable();
+            $table->string('to');
+            $table->string('from');
             $table->enum('status', ['pending', 'processing', 'sent', 'failed'])->default('pending');
             $table->text('error_message')->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('failed_at')->nullable();
             $table->string('message_id')->nullable();
-            $table->boolean('willSucceed')->default(true);
+            $table->boolean('willSucceed')->nullable();
             $table->timestamps();
         });
     }

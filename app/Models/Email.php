@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Email extends Model
 {
@@ -13,9 +12,8 @@ class Email extends Model
     protected $table = 'email_tracker';
 
     protected $fillable = [
-        'to_email',
-        'from_email',
-        'from_name',
+        'to',
+        'from',
         'status',
         'error_message',
         'sent_at',

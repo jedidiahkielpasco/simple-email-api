@@ -1,66 +1,121 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Simple Email API - Setup and Run Guide
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a Laravel-based email API with OAuth2 authentication using Laravel Passport. The API allows authenticated users to send emails through a queue system.
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.1 or higher
+- Composer
+- PostgreSQL (default) or MySQL database
+- Node.js (for frontend assets, if needed)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Step-by-Step Setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Install Dependencies
 
-## Learning Laravel
+```bash
+composer install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Environment Configuration
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Create a `.env` file by copying the example:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+cp .env.example .env
+```
 
-## Laravel Sponsors
+### 3. Generate Application Key
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+php artisan key:generate
+```
 
-### Premium Partners
+### 4. Run Database Migrations
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+php artisan migrate
+```
 
-## Contributing
+### 5. Seed the Database
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan db:seed --class=SuperAdminSeeder
+```
 
-## Code of Conduct
+This creates two test users:
+- **Super Admin**: `superadmin@example.com` / `superadmin123`
+- **Regular User**: `jedidiah@example.com` / `jedidiah123`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 6. Install Laravel Passport
 
-## Security Vulnerabilities
+```bash
+php artisan passport:install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+This will create OAuth2 clients and generate client secrets. **Save the password grant client secret** - you'll need it for authentication.
 
-## License
+### 7. Start the Application
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Option A: Using Laravel's built-in server**
+```bash
+php artisan serve
+```
+The API will be available at `http://localhost:8000`
+
+### 8. Start the Queue Worker (Important!)
+
+For email processing to work, you need to run the queue worker:
+
+```bash
+php artisan queue:work
+```
+
+Keep this running in a separate terminal window.
+
+## API Usage
+
+### 1. Get Access Token
+
+**Endpoint:** `POST /api/oauth/token`
+
+**Request Body:**
+```json
+{
+    "grant_type": "password",
+    "client_id": "2",
+    "client_secret": "{password_grant_client_secret_from_step_6}",
+    "username": "superadmin@example.com",
+    "password": "superadmin123"
+}
+```
+
+**Response:**
+```json
+{
+    "token_type": "Bearer",
+    "expires_in": 31536000,
+    "access_token": "your_access_token_here"
+}
+```
+
+### 2. Send Email
+
+**Endpoint:** `POST /api/v1/emails`
+
+**Headers:**
+```
+Authorization: Bearer {access_token_from_step_1}
+Content-Type: application/json
+```
+
+**Request Body:**
+```json
+{
+    "to": "recipient@example.com",
+    "from": "sender@example.com",
+    "subject": "Test Email Subject",
+    "body": "This is the email body content"
+}
+```
+

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEmailRequest;
 use App\Jobs\ProcessEmail;
 use App\Models\Email;
-use App\Http\Requests\StoreEmailRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class EmailController extends Controller
 {

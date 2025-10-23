@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('email_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('to_email');
-            $table->string('from_email');
-            $table->string('from_name')->nullable();
+            $table->string('to');
+            $table->string('from');
             $table->string('subject')->nullable();
             $table->text('body')->nullable();
             $table->string('message_id')->nullable();

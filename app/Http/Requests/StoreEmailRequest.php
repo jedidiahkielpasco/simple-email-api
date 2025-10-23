@@ -22,9 +22,8 @@ class StoreEmailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'to_email' => 'required|email|max:255',
-            'from_email' => 'required|email|max:255',
-            'from_name' => 'nullable|string|max:255',
+            'to' => 'required|email|max:255',
+            'from' => 'required|email|max:255',
             'subject' => 'required|string|max:255',
             'body' => 'required|string',
             'willSucceed' => 'nullable|boolean',
@@ -39,10 +38,10 @@ class StoreEmailRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'to_email.required' => 'The recipient email address is required.',
-            'to_email.email' => 'The recipient email address must be a valid email.',
-            'from_email.required' => 'The sender email address is required.',
-            'from_email.email' => 'The sender email address must be a valid email.',
+            'to.required' => 'The recipient email address is required.',
+            'to.email' => 'The recipient email address must be a valid email.',
+            'from.required' => 'The sender email address is required.',
+            'from.email' => 'The sender email address must be a valid email.',
             'subject.required' => 'The email subject is required.',
             'body.required' => 'The email body is required.',
             'willSucceed.boolean' => 'The willSucceed field must be true or false.',
