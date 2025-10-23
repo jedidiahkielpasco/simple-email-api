@@ -82,7 +82,7 @@ Keep this running in a separate terminal window.
 ```json
 {
     "grant_type": "password",
-    "client_id": "2",
+    "client_id": "{password_grant_client_id}",
     "client_secret": "{password_grant_client_secret_from_step_6}",
     "username": "superadmin@example.com",
     "password": "superadmin123"
